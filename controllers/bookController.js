@@ -42,7 +42,7 @@ let controller={
         Book.find((err,foundedBooks) => {
             if(err)
                 return res.status(500).send({
-                    message: "Error on READ a book!"
+                    message: "Error on READ books!"
                 });
             return res.status(200).send({
                 op: "Read",
