@@ -25,14 +25,14 @@ let controller={
                 });
             return res.status(201).send({
                 message: "Book created",
-                book: createdBook
+                data: createdBook
             })    
         });
     },
     read: (req,res) => {
         let id=req.params.id;
 
-        if(id===null)
+        if(id===null || id===undefined)
             Book.find((err,readedBooks) => {
                 if(err)
                     return res.status(500).send({
@@ -44,7 +44,7 @@ let controller={
                     });
                 return res.status(200).send({
                     message: "Books readed",
-                    book: readedBooks
+                    data: readedBooks
                 });
             });
         else
@@ -59,7 +59,7 @@ let controller={
                     });
                 return res.status(200).send({
                     message: "Book readed",
-                    book: readedBook
+                    data: readedBook
                 });
             });
     },
@@ -78,7 +78,7 @@ let controller={
                 });
             return res.status(200).send({
                 message: "Book updated",
-                book: updatedBook
+                data: updatedBook
             });
         });
     },
