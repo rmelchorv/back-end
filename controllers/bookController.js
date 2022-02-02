@@ -32,7 +32,7 @@ let controller={
     read: (req,res) => {
         let id=req.params.id;
 
-        if(pId==null)
+        if(id===null)
             Book.find((err,readedBooks) => {
                 if(err)
                     return res.status(500).send({
