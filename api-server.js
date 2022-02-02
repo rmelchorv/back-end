@@ -6,7 +6,7 @@ let parser=require("body-parser");
 let server=express();
 
 //Archivos/Rutas
-let bookRouter=require("./routes/book");
+let bookRouter=require("./routes/bookRouter");
 
 //Middleware
 server.use(parser.urlencoded({ extended: false}));

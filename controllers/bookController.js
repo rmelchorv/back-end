@@ -1,6 +1,6 @@
 "use strict";
 
-let Book=require("../models/book");
+let Book=require("../models/bookModel");
 
 let controller={
     home: (req,res) => {

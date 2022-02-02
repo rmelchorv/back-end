@@ -1,7 +1,7 @@
 "use strict";
 
 let express=require("express");
-let bookController=require("../controllers/book");
+let bookController=require("../controllers/bookController");
 
 let router=express.Router();
 
