@@ -3,16 +3,6 @@
 let Book=require("../models/bookModel");
 
 let controller={
-    home: (req,res) => {
-        return res.status(200).send({
-            message: "Welcome 2HOME!"
-        });
-    },
-    test: (req,res) => {
-        return res.status(200).send({
-            message: "A TEST method!"
-        });
-    },
     create: (req,res) => {
         let book=new Book();
         let params=req.body;
@@ -24,45 +14,54 @@ let controller={
         book.price=params.price;
         book.year=params.year;
         
-        book.save((err,storedBook) => {
+        book.save((err,createdBook) => {
             if(err)
                 return res.status(500).send({
-                    message: "Error on CREATE a new Book!"
+                    message: "Error on CREATE book!"
                 });
-            if(!storedBook)
+            if(!createdBook)
                 return res.status(400).send({
-                    message: "Can't CREATE a new Book!"
+                    message: "Can't CREATE book!"
                 });
             return res.status(201).send({
-                book: storedBook
+                message: "Book created",
+                book: createdBook
             })    
         });
     },
     read: (req,res) => {
-        Book.find((err,foundedBooks) => {
-            if(err)
-                return res.status(500).send({
-                    message: "Error on READ books!"
-                });
-            return res.status(200).send({
-                op: "Read",
-                book: foundedBooks
-            });
-        });
-    },
-    readOne: (req,res) => {
         let id=req.params.id;
 
-        Book.findById(id,(err,foundedBook) => {
-            if(err)
-                return res.status(500).send({
-                    message: "Error on READ a book!"
+        if(pId==null)
+            Book.find((err,readedBooks) => {
+                if(err)
+                    return res.status(500).send({
+                        message: "Error on READ books!"
+                    });
+                if(!readedBooks)
+                    return res.status(400).send({
+                        message: "Can't READ books!"
+                    });
+                return res.status(200).send({
+                    message: "Books readed",
+                    book: readedBooks
                 });
-            return res.status(200).send({
-                op: "ReadOne",
-                book: foundedBook
             });
-        });
+        else
+            Book.findById(id,(err,readedBook) => {
+                if(err)
+                    return res.status(500).send({
+                        message: "Error on READ book!"
+                    });
+                if(!readedBook)
+                    return res.status(400).send({
+                        message: "Can't READ book!"
+                    });
+                return res.status(200).send({
+                    message: "Book readed",
+                    book: readedBook
+                });
+            });
     },
     update: (req,res) => {
         let id=req.params.id;
@@ -71,10 +70,14 @@ let controller={
         Book.findByIdAndUpdate(id,attr,(err,updatedBook) => {
             if(err)
                 return res.status(500).send({
-                    message: "Error on UPDATE a book!"
+                    message: "Error on UPDATE book!"
+                });
+            if(!updatedBook)
+                return res.status(400).send({
+                    message: "Can't UPDATE book!"
                 });
             return res.status(200).send({
-                op: "Update",
+                message: "Book updated",
                 book: updatedBook
             });
         });
@@ -85,10 +88,14 @@ let controller={
         Book.findByIdAndDelete(id,(err,deletedBook) => {
             if(err)
                 return res.status(500).send({
-                    message: "Error on DELETE a book!"
+                    message: "Error on DELETE book!"
+                });
+            if(!deletedBook)
+                return res.status(400).send({
+                    message: "Can't DELETE book!"
                 });
             return res.status(200).send({
-                op: "Delete",
+                message: "Book deleted",
                 book: deletedBook
             });
         });
