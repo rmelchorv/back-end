@@ -37,6 +37,61 @@ let controller={
                 book: storedBook
             })    
         });
+    },
+    read: (req,res) => {
+        Book.find((err,foundedBooks) => {
+            if(err)
+                return res.status(500).send({
+                    message: "Error on READ a book!"
+                });
+            return res.status(200).send({
+                op: "Read",
+                book: foundedBooks
+            });
+        });
+    },
+    readOne: (req,res) => {
+        let id=req.params.id;
+
+        Book.findById(id,(err,foundedBook) => {
+            if(err)
+                return res.status(500).send({
+                    message: "Error on READ a book!"
+                });
+            return res.status(200).send({
+                op: "ReadOne",
+                book: foundedBook
+            });
+        });
+    },
+    update: (req,res) => {
+        let id=req.params.id;
+        let attr=req.body;
+
+        Book.findByIdAndUpdate(id,attr,(err,updatedBook) => {
+            if(err)
+                return res.status(500).send({
+                    message: "Error on UPDATE a book!"
+                });
+            return res.status(200).send({
+                op: "Update",
+                book: updatedBook
+            });
+        });
+    },
+    delete: (req,res) => {
+        let id=req.params.id;
+
+        Book.findByIdAndDelete(id,(err,deletedBook) => {
+            if(err)
+                return res.status(500).send({
+                    message: "Error on DELETE a book!"
+                });
+            return res.status(200).send({
+                op: "Delete",
+                book: deletedBook
+            });
+        });
     }
 };
 
